@@ -15,9 +15,9 @@ type BenefitKey = "calmante" | "energia" | "refresco" | "floral";
 type BossaBlend = {
   name: string;
   notes: string;
-  vibe?: string; // 👈 ESSA LINHA É A CORREÇÃO
-  inspiredBy?: string;
-  sensations?: string;
+  vibe: string; // 👈 ESSA LINHA É A CORREÇÃO
+  inspiredBy: string;
+  sensations: string;
 };
 
 type CartItem = {
@@ -123,7 +123,7 @@ const PACKS: Record<PackKey, { label: string; sub: string; priceAdd: number }> =
     },
   };
 
-const BOSSA_BLENDS: BossaBlend[] = [
+const BOSSA_BLENDS: = [
   {
     name: "Vinil 62",
     notes: "erva doce • camomila • baunilha",
