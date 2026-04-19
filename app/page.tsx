@@ -15,9 +15,9 @@ type BenefitKey = "calmante" | "energia" | "refresco" | "floral";
 type BossaBlend = {
   name: string;
   notes: string;
-  profile: string;
-  story: string;
-  benefit: string;
+  vibe?: string; // 👈 ESSA LINHA É A CORREÇÃO
+  inspiredBy?: string;
+  sensations?: string;
 };
 
 type CartItem = {
