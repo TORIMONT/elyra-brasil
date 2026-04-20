@@ -2357,7 +2357,7 @@ function EssenciaModal({
 export default function Page() {
   const [isBlendOpen, setIsBlendOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [activeBlend, setActiveBlend] = useState<BossaBlend | null>(null);
+  const [activeBlend, setActiveBlend] = useState<any>(null);
   const [activeEssencia, setActiveEssencia] = useState<EssenciaItem | null>(
     null
   );
