@@ -1014,14 +1014,20 @@ function BossaModal({
         >
           fechar
         </button>
+
         <p className="text-xs uppercase tracking-[0.28em] text-[#a7a7a7]">
           coleção atual • bossa
         </p>
+
         <h3 className="mt-4 text-4xl font-light">{blend.name}</h3>
+
         <p className="mt-4 text-sm uppercase tracking-[0.18em] text-[#a7a7a7]">
-          {blend.profile}
+          {blend.vibe}
         </p>
-        <p className="mt-6 text-base leading-8 text-[#ececec]">{blend.notes}</p>
+
+        <p className="mt-6 text-base leading-8 text-[#ececec]">
+          {blend.notes}
+        </p>
 
         <div className="mt-10 grid gap-8 md:grid-cols-2">
           <div>
@@ -1029,15 +1035,16 @@ function BossaModal({
               história do nome
             </p>
             <p className="mt-3 text-sm leading-7 text-[#dddddd]">
-              {blend.story}
+              {blend.inspiredBy}
             </p>
           </div>
+
           <div>
             <p className="text-xs uppercase tracking-[0.24em] text-[#a7a7a7]">
               proposta e benefício
             </p>
             <p className="mt-3 text-sm leading-7 text-[#dddddd]">
-              {blend.benefit}
+              {blend.benefits}
             </p>
           </div>
         </div>
@@ -1049,6 +1056,7 @@ function BossaModal({
           >
             adicionar ao carrinho
           </button>
+
           <button
             onClick={onOpenBlend}
             className="rounded-full border border-[#5a5a5a] px-6 py-3 text-sm text-white"
