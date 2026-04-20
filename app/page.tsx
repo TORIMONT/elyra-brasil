@@ -122,8 +122,7 @@ const PACKS: Record<PackKey, { label: string; sub: string; priceAdd: number }> =
       priceAdd: -10,
     },
   };
-
-const BOSSA_BLENDS: = [
+const BOSSA_BLENDS = [
   {
     name: "Vinil 62",
     notes: "erva doce • camomila • baunilha",
@@ -216,7 +215,7 @@ const BOSSA_BLENDS: = [
     price: 98,
     image: "/bossa/brisa.jpg",
   },
-];
+] as any;
 
 function SectionTitle({
   eyebrow,
