@@ -10,7 +10,14 @@ import { motion } from "framer-motion";
 
 type PackKey = "glass" | "refill" | "essential";
 type CartKind = "collection" | "custom";
-type BenefitKey = "calmante" | "energia" | "refresco" | "floral";
+type BenefitKey =
+  | "calmante"
+  | "energia"
+  | "refresco"
+  | "floral"
+  | "foco"
+  | "detox"
+  | "equilibrar";
 
 type BossaBlend = {
   name: string;
@@ -33,7 +40,6 @@ type CartItem = {
   kind: CartKind;
 };
 
-
 type EssenciaItem = {
   name: string;
   desc: string;
@@ -44,89 +50,9 @@ type EssenciaItem = {
   price: number;
 };
 
-const MP_PUBLIC_KEY = "TEST-22750140-4417-45e4-b347-0e19ca8c3ae0";
-const CHECKOUT_API_URL = "/api/mercado-pago/checkout";
 const MATCHA_PRICE = 58;
 
-const INGREDIENTS = {
-  bases: ["chá verde", "chá preto", "chá branco", "mate tostado"],
-  ervas: [
-    "capim limão",
-    "mulungu",
-    "hortelã",
-    "hortelã pimenta",
-    "menta",
-    "melissa",
-    "folha de maracujá",
-    "folha de amora",
-    "alecrim",
-    "salvia branca",
-    "verbena",
-    "ginko biloba",
-    "moringa",
-    "ora pro nobis",
-    "folha de neem",
-    "dente de leão",
-  ],
-  flores: [
-    "camomila",
-    "hibisco",
-    "calêndula",
-    "lúpulo",
-    "alfazema azul",
-    "lavanda",
-    "rosa branca",
-    "rosa damascena",
-  ],
-  frutas: [
-    "blueberry",
-    "cranberry",
-    "mirtilo",
-    "goji berry",
-    "limão siciliano",
-    "laranja",
-    "maçã",
-    "coco desidratado",
-  ],
-  especiarias: [
-    "canela em pau",
-    "cravo",
-    "gengibre",
-    "cúrcuma",
-    "anis estrelado",
-    "fava de baunilha",
-    "pimenta rosa",
-    "zimbro",
-    "endro",
-  ],
-} as const;
-
-const LIMITS = {
-  ervas: 5,
-  flores: 3,
-  frutas: 1,
-  especiarias: 2,
-} as const;
-
-const PACKS: Record<PackKey, { label: string; sub: string; priceAdd: number }> =
-  {
-    glass: {
-      label: "frasco Elyra",
-      sub: "vidro + inox + refil 400g",
-      priceAdd: 22,
-    },
-    refill: {
-      label: "refil 400g",
-      sub: "continuidade",
-      priceAdd: 0,
-    },
-    essential: {
-      label: "formato essencial 200g",
-      sub: "entrada",
-      priceAdd: -10,
-    },
-  };
-const BOSSA_BLENDS = [
+const BOSSA_BLENDS: BossaBlend[] = [
   {
     name: "Vinil 62",
     notes: "erva doce • camomila • baunilha",
@@ -134,9 +60,9 @@ const BOSSA_BLENDS = [
     inspiredBy:
       "Uma sala silenciosa no fim da tarde, madeira aquecida pela luz e um vinil girando baixo. Vinil 62 nasce dessa pausa elegante, íntima e nostálgica.",
     sensations:
-      "Na xícara, entrega maciez, doçura sutil e um calor delicado que desacelera o tempo. O aroma lembra conforto, casa arrumada, respiração mais funda e presença.",
+      "Na xícara, entrega maciez, doçura sutil e um calor delicado que desacelera o tempo.",
     benefits:
-      "camomila e erva-doce ajudam no relaxamento e no conforto digestivo, enquanto a baunilha arredonda a experiência e amplia o acolhimento sensorial.",
+      "camomila e erva-doce ajudam no relaxamento e no conforto digestivo.",
     price: 118,
     image: "/bossa/vinil62.jpg",
     highlight: true,
@@ -144,13 +70,13 @@ const BOSSA_BLENDS = [
   {
     name: "Copacabana",
     notes: "chá verde • hortelã • limão siciliano",
-    vibe: "brisa leve, manhã clara, cidade aberta",
+    vibe: "brisa leve, manhã clara",
     inspiredBy:
-      "A claridade limpa da manhã, a brisa aberta da orla e a cidade começando a respirar. Copacabana traduz frescor, movimento e leveza urbana.",
+      "A claridade limpa da manhã, a brisa aberta da orla e a cidade começando a respirar.",
     sensations:
-      "É um blend claro, vivo e luminoso. Hortelã e limão siciliano abrem o aroma e criam uma sensação de limpeza, energia leve e mente desperta.",
+      "É um blend claro, vivo e luminoso.",
     benefits:
-      "chá verde favorece foco e vitalidade; hortelã e limão siciliano trazem frescor e sensação revigorante para começar o dia.",
+      "chá verde favorece foco e vitalidade.",
     price: 98,
     image: "/bossa/copacabana.jpg",
   },
@@ -159,67 +85,67 @@ const BOSSA_BLENDS = [
     notes: "chá preto • canela • baunilha",
     vibe: "luz baixa, calor, presença",
     inspiredBy:
-      "Luz baixa, conversa longa, calor elegante. Noite em Ipanema carrega o lado mais profundo e noturno da coleção Bossa.",
+      "Luz baixa, conversa longa, calor elegante.",
     sensations:
-      "Tem corpo, presença e um perfume quente que envolve. A canela e a baunilha criam aconchego, enquanto o chá preto sustenta uma atmosfera intensa e sofisticada.",
+      "Tem corpo, presença e um perfume quente.",
     benefits:
-      "chá preto oferece energia estruturada, enquanto canela e baunilha ampliam a sensação de aquecimento e conforto.",
+      "chá preto oferece energia estruturada.",
     price: 98,
     image: "/bossa/noite.jpg",
   },
   {
     name: "Garota da Tarde",
     notes: "hibisco • laranja • capim limão",
-    vibe: "tarde longa, luz suave, pausa",
+    vibe: "tarde longa, luz suave",
     inspiredBy:
-      "O instante em que a tarde desacelera, a luz fica mais macia e o tempo parece se alongar. Garota da Tarde foi criado para esse intervalo bonito entre movimento e pausa.",
+      "O instante em que a tarde desacelera.",
     sensations:
-      "Tem brilho cítrico, leveza floral e frescor delicado. É um blend que ilumina sem pesar e deixa a xícara mais leve, aberta e gentil.",
+      "Tem brilho cítrico e leveza floral.",
     benefits:
-      "hibisco e laranja trazem vivacidade e frescor, enquanto o capim-limão ajuda a criar uma experiência mais equilibrada e relaxante.",
+      "hibisco e laranja trazem vivacidade.",
     price: 98,
     image: "/bossa/tarde.jpg",
   },
   {
     name: "Luz de Leblon",
     notes: "chá branco • rosa branca • maçã",
-    vibe: "silêncio dourado, leveza, elegância",
+    vibe: "silêncio dourado",
     inspiredBy:
-      "Uma luz dourada e limpa no fim do dia, quase silenciosa. Luz de Leblon nasce da elegância calma, do respiro e da beleza sem excesso.",
+      "Uma luz dourada e limpa no fim do dia.",
     sensations:
-      "É claro, delicado e refinado. Rosa branca e maçã deixam a experiência macia, aérea e serena, com uma sensação de leveza sofisticada.",
+      "É claro, delicado e refinado.",
     benefits:
-      "chá branco oferece suavidade e delicadeza; rosa branca e maçã ajudam a construir uma experiência mais calma, equilibrada e sensorial.",
+      "chá branco oferece suavidade.",
     price: 108,
     image: "/bossa/leblon.jpg",
   },
   {
     name: "Ritmo Carioca",
     notes: "mate tostado • gengibre • laranja",
-    vibe: "movimento, energia, pulso urbano",
+    vibe: "movimento, energia",
     inspiredBy:
-      "A pulsação da rua, o movimento da cidade, o calor humano. Ritmo Carioca é a parte mais vibrante da coleção Bossa.",
+      "A pulsação da rua, o movimento da cidade.",
     sensations:
-      "Tem calor, presença e impulso. Mate tostado, gengibre e laranja criam uma xícara mais energética, viva e expansiva.",
+      "Tem calor, presença e impulso.",
     benefits:
-      "mate tostado favorece disposição; gengibre aquece e ativa; laranja traz brilho e leveza para sustentar uma energia mais limpa.",
+      "mate tostado favorece disposição.",
     price: 98,
     image: "/bossa/ritmo.jpg",
   },
   {
     name: "Brisa Atlântica",
     notes: "capim limão • melissa • limão siciliano",
-    vibe: "vento leve, frescor, desacelerar",
+    vibe: "vento leve, frescor",
     inspiredBy:
-      "O vento leve vindo do mar, a sensação de pausa e o ar mais limpo depois do excesso. Brisa Atlântica é a desaceleração da coleção.",
+      "O vento leve vindo do mar.",
     sensations:
-      "Entrega frescor suave, limpeza aromática e calma leve. É o tipo de blend que parece abrir espaço por dentro e deixar o corpo respirar melhor.",
+      "Entrega frescor suave e calma leve.",
     benefits:
-      "melissa ajuda no relaxamento, enquanto capim-limão e limão siciliano ampliam a sensação de frescor e clareza.",
+      "melissa ajuda no relaxamento.",
     price: 98,
     image: "/bossa/brisa.jpg",
   },
-] as any;
+];
 
 function SectionTitle({
   eyebrow,
@@ -342,10 +268,13 @@ function BossaSection({
 function BenefitsSection({
   onViewCollection,
   onGuidedCreate,
+  onOpenBlank,
 }: {
   onViewCollection: () => void;
   onGuidedCreate: (benefit: BenefitKey) => void;
-}) {
+  onOpenBlank: () => void;
+}) { 
+  
   const states = [
     {
       key: "calmante" as BenefitKey,
@@ -2366,6 +2295,146 @@ function EssenciaModal({
     </div>
   );
 }
+
+const INGREDIENTS = {
+  bases: [
+    "chá verde",
+    "chá preto",
+    "chá branco",
+    "mate tostado",
+  ],
+
+  ervas: [
+    "capim limão",
+    "mulungu",
+    "hortelã",
+    "hortelã pimenta",
+    "menta",
+    "melissa",
+    "folha de maracujá",
+    "folha de amora",
+    "alecrim",
+    "salvia branca",
+    "verbena",
+    "ginko biloba",
+    "moringa",
+    "ora pro nobis",
+    "folha de neem",
+    "dente de leão",
+  ],
+
+  flores: [
+    "camomila",
+    "hibisco",
+    "calêndula",
+    "lúpulo",
+    "alfazema azul",
+    "lavanda",
+    "rosa branca",
+    "rosa damascena",
+  ],
+
+  frutas: [
+    "blueberry",
+    "cranberry",
+    "mirtilo",
+    "goji berry",
+    "limão siciliano",
+    "laranja",
+    "maçã",
+    "coco desidratado",
+  ],
+
+  especiarias: [
+    "canela em pau",
+    "cravo",
+    "gengibre",
+    "cúrcuma",
+    "anis estrelado",
+    "fava de baunilha",
+    "pimenta rosa",
+    "zimbro",
+    "endro",
+  ],
+} as const;
+
+const LIMITS = {
+  ervas: 5,
+  flores: 3,
+  frutas: 1,
+  especiarias: 2,
+} as const;
+
+const PACKS = {
+  glass: {
+    label: "frasco Elyra 400g",
+    sub: "vidro + inox + blend",
+    priceAdd: 0,
+  },
+  refill: {
+    label: "refil 400g",
+    sub: "somente blend",
+    priceAdd: -12,
+  },
+  essential: {
+    label: "formato essencial 200g",
+    sub: "compacto",
+    priceAdd: -18,
+  },
+} as const;
+
+const categoryMap: Record<string, "ervas" | "flores" | "frutas" | "especiarias"> = {
+  // ERVAS
+  "capim limão": "ervas",
+  "mulungu": "ervas",
+  "hortelã": "ervas",
+  "hortelã pimenta": "ervas",
+  "menta": "ervas",
+  "melissa": "ervas",
+  "folha de maracujá": "ervas",
+  "folha de amora": "ervas",
+  "alecrim": "ervas",
+  "salvia branca": "ervas",
+  "verbena": "ervas",
+  "ginko biloba": "ervas",
+  "moringa": "ervas",
+  "ora pro nobis": "ervas",
+  "folha de neem": "ervas",
+  "dente de leão": "ervas",
+
+  // FLORES
+  "camomila": "flores",
+  "hibisco": "flores",
+  "calêndula": "flores",
+  "lúpulo": "flores",
+  "alfazema azul": "flores",
+  "lavanda": "flores",
+  "rosa branca": "flores",
+  "rosa damascena": "flores",
+
+  // FRUTAS
+  "blueberry": "frutas",
+  "cranberry": "frutas",
+  "mirtilo": "frutas",
+  "goji berry": "frutas",
+  "limão siciliano": "frutas",
+  "laranja": "frutas",
+  "maçã": "frutas",
+  "coco desidratado": "frutas",
+
+  // ESPECIARIAS
+  "canela em pau": "especiarias",
+  "cravo": "especiarias",
+  "gengibre": "especiarias",
+  "cúrcuma": "especiarias",
+  "anis estrelado": "especiarias",
+  "fava de baunilha": "especiarias",
+  "pimenta rosa": "especiarias",
+  "zimbro": "especiarias",
+  "endro": "especiarias",
+};
+
+
 export default function Page() {
   const [isBlendOpen, setIsBlendOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -2387,32 +2456,48 @@ export default function Page() {
   const [capsuleMode, setCapsuleMode] = useState<"buy" | "subscribe">("buy");
   const [selectedBlend, setSelectedBlend] = useState<any>(null);
   const [openStartModal, setOpenStartModal] = useState(false);
+  const [modal, setModal] = useState<
+  "contato" | "privacidade" | "termos" | "aviso" | null
+>(null);
   const BOSSA_GALLERY = BOSSA_BLENDS.map((b) => ({
   name: b.name,
   image: b.image,
   inspiredBy: b.inspiredBy,
 }));
-  const [modal, setModal] = useState<
-    "contato" | "privacidade" | "termos" | "aviso" | null
-  >(null);
 
   const categoryMap = useMemo(() => {
-    const map: Record<string, string> = {};
-    Object.entries(INGREDIENTS).forEach(([category, items]) =>
-      items.forEach((item) => {
-        map[item] = category;
-      })
-    );
-    return map;
-  }, []);
+  const map: Record<string, string> = {};
 
-  const categoryCount = useMemo(() => {
-    return selected.reduce((acc, item) => {
-      const cat = categoryMap[item];
-      if (cat && cat !== "bases") acc[cat] = (acc[cat] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-  }, [selected, categoryMap]);
+  for (const category of Object.keys(INGREDIENTS)) {
+    const items = INGREDIENTS[category as keyof typeof INGREDIENTS];
+
+    if (Array.isArray(items)) {
+      for (const item of items) {
+        map[item] = category;
+      }
+    }
+  }
+
+  return map;
+}, []);
+
+const categoryCount = useMemo(() => {
+  const count = {
+    ervas: 0,
+    flores: 0,
+    frutas: 0,
+    especiarias: 0,
+  };
+
+  selected.forEach((item) => {
+    const category = categoryMap[item];
+    if (category && count[category] !== undefined) {
+      count[category]++;
+    }
+  });
+
+  return count;
+}, [selected]);
 
   const addCoffeeToCart = (item: CartItem) => {
     setCartItems((prev) => [...prev, item]);
@@ -2517,58 +2602,90 @@ export default function Page() {
   };
 
   const openGuidedBlend = (benefit: BenefitKey) => {
-    const presets: Record<
-      BenefitKey,
-      { base: string; selected: string[]; notice: string }
-    > = {
-      calmante: {
-        base: "chá branco",
-        selected: [
-          "melissa",
-          "folha de maracujá",
-          "camomila",
-          "lavanda",
-          "fava de baunilha",
-        ],
-        notice: "blend guiado • calmante",
-      },
-      energia: {
-        base: "mate tostado",
-        selected: ["alecrim", "hortelã", "hibisco", "laranja", "gengibre"],
-        notice: "blend guiado • energia",
-      },
-      refresco: {
-        base: "chá verde",
-        selected: [
-          "capim limão",
-          "hortelã",
-          "melissa",
-          "hibisco",
-          "limão siciliano",
-        ],
-        notice: "blend guiado • refresco",
-      },
-      floral: {
-        base: "chá branco",
-        selected: [
-          "rosa branca",
-          "lavanda",
-          "camomila",
-          "maçã",
-          "fava de baunilha",
-        ],
-        notice: "blend guiado • floral",
-      },
-    };
-
-    const preset = presets[benefit];
-    setBase(preset.base);
-    setSelected(preset.selected);
-    setNotice(preset.notice);
-    setPack("glass");
-    setIsBlendOpen(true);
+  const presets: Record<
+    BenefitKey,
+    { base: string; selected: string[]; notice: string }
+  > = {
+    calmante: {
+      base: "chá branco",
+      selected: [
+        "melissa",
+        "folha de maracujá",
+        "camomila",
+        "lavanda",
+        "fava de baunilha",
+      ],
+      notice: "blend guiado • calmante",
+    },
+    energia: {
+      base: "mate tostado",
+      selected: ["alecrim", "hortelã", "hibisco", "laranja", "gengibre"],
+      notice: "blend guiado • energia",
+    },
+    refresco: {
+      base: "chá verde",
+      selected: [
+        "capim limão",
+        "hortelã",
+        "melissa",
+        "hibisco",
+        "limão siciliano",
+      ],
+      notice: "blend guiado • refresco",
+    },
+    floral: {
+      base: "chá branco",
+      selected: [
+        "rosa branca",
+        "lavanda",
+        "camomila",
+        "maçã",
+        "fava de baunilha",
+      ],
+      notice: "blend guiado • floral",
+    },
+    foco: {
+      base: "chá verde",
+      selected: [
+        "ginko biloba",
+        "alecrim",
+        "hortelã",
+        "gengibre",
+        "laranja",
+      ],
+      notice: "blend guiado • foco",
+    },
+    detox: {
+      base: "chá verde",
+      selected: [
+        "dente de leão",
+        "hibisco",
+        "capim limão",
+        "gengibre",
+        "maçã",
+      ],
+      notice: "blend guiado • detox",
+    },
+    equilibrar: {
+      base: "chá branco",
+      selected: [
+        "melissa",
+        "camomila",
+        "rosa branca",
+        "capim limão",
+        "maçã",
+      ],
+      notice: "blend guiado • equilibrar",
+    },
   };
 
+  const preset = presets[benefit];
+  setBase(preset.base);
+  setSelected(preset.selected);
+  setNotice(preset.notice);
+  setPack("glass");
+  setIsBlendOpen(true);
+};
   const viewCollection = () => {
     document.getElementById("colecoes")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -2638,8 +2755,8 @@ export default function Page() {
   <StartElyraModal
     onClose={() => setOpenStartModal(false)}
     onOpenBuilder={() => {
-      setOpenStartModal(false);
-      setOpenBlendBuilder(true);
+  setOpenStartModal(false);
+  setIsBlendOpen(true);
     }}
     onViewCollection={() => {
       setOpenStartModal(false);
