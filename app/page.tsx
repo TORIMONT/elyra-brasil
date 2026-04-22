@@ -2459,7 +2459,7 @@ export default function Page() {
   const [modal, setModal] = useState<
   "contato" | "privacidade" | "termos" | "aviso" | null
 >(null);
-  const BOSSA_GALLERY = BOSSA_BLENDS.map((b) => ({
+ const BOSSA_GALLERY = BOSSA_BLENDS.map((b: any) => ({
   name: b.name,
   image: b.image,
   inspiredBy: b.inspiredBy,
