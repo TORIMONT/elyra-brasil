@@ -52,7 +52,7 @@ type EssenciaItem = {
 
 const MATCHA_PRICE = 58;
 
-const BOSSA_BLENDS = [
+const BOSSA_BLENDS: any = [
   {
     name: "Vinil 62",
     notes: "erva doce • camomila • baunilha",
