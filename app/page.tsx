@@ -183,7 +183,7 @@ function BossaSection({
   onSelect,
   onAddToCart,
 }: {
-  onSelect: (blend: BossaBlend) => void;
+  onSelect: (blend: any) => void;
   onAddToCart: (item: CartItem) => void;
 }) {
   return (
@@ -929,7 +929,7 @@ function BossaModal({
   onAddToCart,
   onOpenBlend,
 }: {
-  blend: BossaBlend;
+  blend: any;
   onClose: () => void;
   onAddToCart: () => void;
   onOpenBlend: () => void;
