@@ -1,0 +1,17 @@
+[33m050e0ff[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m revert: remove ignore typescript config
+[33ma48e1d9[m fix: ignore typescript build errors
+[33m7152c4d[m fix: bossa gallery type isolado
+[33meb75217[m stable: builder funcionando + site restaurado
+[33m68589e1[m fix: map any definitivo
+[33m23f501d[m fix: BOSSA any root
+[33m5be4c30[m fix: remove uso de BossaBlend
+[33ma6b76c1[m fix: ajuste final BOSSA_BLENDS
+[33m745493c[m stable
+[33m047b263[m fix: corrige props do BossaModal
+[33m87497dd[m fix: tipo BossaBlend completo
+[33m00469d7[m fix: força any no BOSSA_BLENDS
+[33m076ca1a[m fix: remove tipagem do useState BossaBlend
+[33mce4b654[m fix: BOSSA_BLENDS any
+[33m586037f[m fix: remove tipagem conflitante do BOSSA_BLENDS
+[33mc9bb8af[m fix: adiciona vibe no tipo BossaBlend
+[33m5f6579c[m elyra clean deploy

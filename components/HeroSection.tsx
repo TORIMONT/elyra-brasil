@@ -31,7 +31,7 @@ export default function HeroSection({ onOpenBlend }: HeroSectionProps) {
 
             <button
               onClick={onOpenBlend}
-              section className="rounded-full border border-[#cfcac7] bg-white/80 px-6 py-3 text-sm"
+              className="rounded-full border border-[#cfcac7] bg-white/80 px-6 py-3 text-sm"
             >
               criar meu blend
             </button>

@@ -198,15 +198,11 @@ function BossaSection({
 
         {/* CARROSSEL */}
         <div className="relative mt-16">
-          {/* fade esquerdo */}
           <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 bg-gradient-to-r from-[#2a2a2a] to-transparent" />
-
-          {/* fade direito */}
           <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 bg-gradient-to-l from-[#2a2a2a] to-transparent" />
 
-          {/* carrossel */}
           <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory">
-            {BOSSA_BLENDS.map((blend) => (
+            {BOSSA_BLENDS.map((blend: any) => (
               <article
                 key={blend.name}
                 className="group min-w-[280px] max-w-[280px] flex-shrink-0 snap-start transition duration-500 hover:-translate-y-1"
@@ -2138,7 +2134,7 @@ function EssenciaModal({
     {/* imagem */}
     <div className="relative z-[2] h-[200px] w-[200px] overflow-hidden rounded-full border border-white/70 shadow-[0_12px_30px_rgba(0,0,0,0.10)]">
       <img
-        src={essencia.image || "/essencias/chaverde.jpg"}
+        src={(essencia as any).image || "/essencias/chaverde.jpg"}
         alt={essencia.name}
         className="h-full w-full object-cover object-center scale-[1.1]"
       />
@@ -2482,7 +2478,7 @@ export default function Page() {
 }, []);
 
 const categoryCount = useMemo(() => {
-  const count = {
+  const count: Record<"ervas" | "flores" | "frutas" | "especiarias", number> = {
     ervas: 0,
     flores: 0,
     frutas: 0,
@@ -2490,14 +2486,15 @@ const categoryCount = useMemo(() => {
   };
 
   selected.forEach((item) => {
-    const category = categoryMap[item];
+    const category = categoryMap[item] as keyof typeof count;
+
     if (category && count[category] !== undefined) {
       count[category]++;
     }
   });
 
   return count;
-}, [selected]);
+}, [selected, categoryMap]);
 
   const addCoffeeToCart = (item: CartItem) => {
     setCartItems((prev) => [...prev, item]);
